@@ -1,0 +1,27 @@
+.vscode
+Content
+DerivedDataCache
+Intermediate
+Saved
+Script
+
+# Build artifacts
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.sln
+*.xcodeproj
+
+.vs
+.idea
+
+.idea/
+.vs/
+.vscode/
+Binaries/
+Content/
+CryptRaider.code-workspace
+CryptRaider.uproject
+
