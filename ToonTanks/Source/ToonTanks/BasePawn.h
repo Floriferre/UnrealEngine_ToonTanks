@@ -15,19 +15,35 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
+	// BlueprintReadWrite : 블루프린트 Event graph에서 읽고 쓸 수 있다 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int32 VisibleAnywhereInt = 12;
+
+	UPROPERTY(EditAnywhere)
+	int32 EditAnywhereInt = 22;
+
+	UPROPERTY(VisibleInstanceOnly)
+	int32 VisibleInstanceOnlyInt = 11;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	int32 VisibleDefaultInt = 5;
+
+	UPROPERTY(EditAnywhere)
+	float Speed = 400.f;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:	// 이 클래스에서만 접근 가능
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	class UCapsuleComponent* CapsuleComp;
 	// forward declaration (전방선언) : 헤더 파일을 포함시키는 행위가 컴파일 시간을 증가시키기 때문에 이를 막기 위해 포인터 객체를 선언할 때는 클래스 선언 전에 필요한 클래스를 명시하여 헤더파일의 중복을 막는다
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	UStaticMeshComponent* BaseMesh;	// 탱크 몸체
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	UStaticMeshComponent* TurretMesh;	// 탱크 회전 부분
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	USceneComponent* ProjectileSpawnPoint;	// 총알이 발사되는 부분 
 	
 public:	
