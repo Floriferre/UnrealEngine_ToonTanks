@@ -17,8 +17,13 @@ class TOONTANKS_API ATank : public ABasePawn
 public:
 ATank();
 
+	
 // Called to bind functionality to input
 virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 	
 private:
@@ -38,6 +43,6 @@ private:
 	void Move(float value);
 	void Turn(float value);
 
-
+	APlayerController* PlayerControllerRef;
 	
 };

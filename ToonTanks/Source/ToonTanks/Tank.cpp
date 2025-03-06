@@ -18,6 +18,17 @@ ATank::ATank()
 	Camera->SetupAttachment(SpringArm);
 }
 
+// Called when the game starts or when spawned
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// AController가 상위 타입의 오브젝트
+	// 상위 타입의 오브젝트를 하위타입의 오브젝트인 APlayerController에 저장할 수 없다
+	// 따라서 Cast를 해주어야한다
+	PlayerControllerRef = Cast<APlayerController>(GetController());
+}
+
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

@@ -15,10 +15,6 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 private:	// 이 클래스에서만 접근 가능
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	class UCapsuleComponent* CapsuleComp;
