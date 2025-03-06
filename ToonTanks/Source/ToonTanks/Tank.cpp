@@ -2,9 +2,9 @@
 
 
 #include "Tank.h"
-
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/InputComponent.h"
 
 ATank::ATank()
 {
@@ -15,4 +15,18 @@ ATank::ATank()
 	// 카메라 만들어서 스프링암에 연결하기
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+}
+
+// Called to bind functionality to input
+void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	// 인풋된 값을 가져오는데, MoveForward로 바인드, 어디에? Tank에, 어디로? Move로 
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
+}
+
+void ATank::Move(float value)
+{
+	UE_LOG(LogTemp,Display,TEXT("Move Forward: %f"), value);
 }
