@@ -27,8 +27,7 @@ private:	// 이 클래스에서만 접근 가능
 	USceneComponent* ProjectileSpawnPoint;	// 총알이 발사되는 부분 
 	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+
 
 
 };

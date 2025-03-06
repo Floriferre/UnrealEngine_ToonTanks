@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 ATank::ATank()
 {
@@ -26,6 +27,7 @@ void ATank::BeginPlay()
 	// AController가 상위 타입의 오브젝트
 	// 상위 타입의 오브젝트를 하위타입의 오브젝트인 APlayerController에 저장할 수 없다
 	// 따라서 Cast를 해주어야한다
+	// 플레이어가 사용하고 있는 캐릭터를 리턴
 	PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
@@ -37,6 +39,27 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 인풋된 값을 가져오는데, MoveForward로 바인드, 어디에? Tank에, 어디로? Move로 
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);	// D, A 눌렀을 때
+}
+
+// Called every frame
+void ATank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (PlayerControllerRef)
+	{
+		FHitResult HitResult;
+		PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,
+			false,
+			HitResult);
+		DrawDebugSphere(GetWorld(),
+			HitResult.ImpactPoint,
+			25.f,
+			12.f,
+			FColor::Yellow,
+			false,
+			-1.f);
+	}
 }
 
 void ATank::Move(float value)
