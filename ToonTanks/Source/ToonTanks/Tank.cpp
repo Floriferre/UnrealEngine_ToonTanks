@@ -52,13 +52,8 @@ void ATank::Tick(float DeltaTime)
 		PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);
-		DrawDebugSphere(GetWorld(),
-			HitResult.ImpactPoint,
-			25.f,
-			12.f,
-			FColor::Yellow,
-			false,
-			-1.f);
+		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint,25.f, 12, FColor::Red, false, -1.0f);
+		RotateTurret(HitResult.ImpactPoint);	// 마우스가 가리키는 정확한 위치를 넘겨주어 turret을 회전시킨다 
 	}
 }
 

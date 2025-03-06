@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -28,6 +29,19 @@ ABasePawn::ABasePawn()
 
 }
 
+void ABasePawn::RotateTurret(FVector LookAtTarget)
+{
+	// 방향 벡터 중에 x, y 방향만 움직이고 (Yaw) 위아래는 움직이지 않기 
+	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation();
+	FRotator LookAtRotation = FRotator(0.0f, ToTarget.Rotation().Yaw, 0.0f);
+	TurretMesh->SetWorldRotation(	// 부드럽게 움직이기 위해(기존에는 탱크 가운데 부분에서 머리가 휙휙 움직였다) 간섭 추가 
+		FMath::RInterpTo(
+			TurretMesh->GetComponentRotation(),
+			LookAtRotation,
+			UGameplayStatics::GetWorldDeltaSeconds(this),
+			15.f)
+		);	// Rotation 반영하기 
+}
 
 
 
