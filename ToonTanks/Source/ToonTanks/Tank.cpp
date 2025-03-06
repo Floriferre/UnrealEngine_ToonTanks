@@ -28,5 +28,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Move(float value)
 {
-	UE_LOG(LogTemp,Display,TEXT("Move Forward: %f"), value);
+	FVector DeltaLocation = FVector::ZeroVector;	// DeltaLocation 초기화
+	DeltaLocation.X = value;	// value 할당
+	AddActorLocalOffset(DeltaLocation);	// Offset 적용
 }
