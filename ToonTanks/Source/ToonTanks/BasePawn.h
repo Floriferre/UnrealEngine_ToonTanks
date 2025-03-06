@@ -11,12 +11,13 @@ class TOONTANKS_API ABasePawn : public APawn
 {
 	GENERATED_BODY()
 
-public:
+public: 
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
 protected:
-	void RotateTurret(FVector LookAtTarget);	// Tank와 Turret 둘 다 사용하므로 
+	void RotateTurret(FVector LookAtTarget);	// Tank와 Turret 둘 다 사용하므로
+	void Fire();
 
 private:	// 이 클래스에서만 접근 가능
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))

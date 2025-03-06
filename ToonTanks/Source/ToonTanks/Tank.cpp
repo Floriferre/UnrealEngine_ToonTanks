@@ -39,6 +39,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 인풋된 값을 가져오는데, MoveForward로 바인드, 어디에? Tank에, 어디로? Move로 
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);	// D, A 눌렀을 때
+
+	// Action Mapping (Action은 여러번 동작 가능)
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATank::Fire);;
 }
 
 // Called every frame
