@@ -15,22 +15,6 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
-	// BlueprintReadWrite : 블루프린트 Event graph에서 읽고 쓸 수 있다 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int32 VisibleAnywhereInt = 12;
-
-	UPROPERTY(EditAnywhere)
-	int32 EditAnywhereInt = 22;
-
-	UPROPERTY(VisibleInstanceOnly)
-	int32 VisibleInstanceOnlyInt = 11;
-
-	UPROPERTY(VisibleDefaultsOnly)
-	int32 VisibleDefaultInt = 5;
-
-	UPROPERTY(EditAnywhere)
-	float Speed = 400.f;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

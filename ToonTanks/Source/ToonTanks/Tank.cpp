@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/InputComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ATank::ATank()
 {
@@ -29,6 +30,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATank::Move(float value)
 {
 	FVector DeltaLocation = FVector::ZeroVector;	// DeltaLocation 초기화
-	DeltaLocation.X = value;	// value 할당
+	// X = Value * DeltaTime * Speed
+	DeltaLocation.X = value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);	// value 할당 * Speed 조절 * 현재 Tank가 있는 World의 DeltaTime을 가져옴
 	AddActorLocalOffset(DeltaLocation);	// Offset 적용
 }
