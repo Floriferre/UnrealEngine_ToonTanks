@@ -18,6 +18,13 @@ void ATower::Tick(float DeltaTime)
 	}
 }
 
+void ATower::HandleDestruction()
+{
+	// BasePawn의 Sound, Effect를 상속받아서 사용 후 Destroy
+	Super::HandleDestruction();
+	Destroy();
+}
+
 void ATower::BeginPlay()
 {
 	Super::BeginPlay();

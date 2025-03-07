@@ -28,7 +28,7 @@ void ATank::BeginPlay()
 	// 상위 타입의 오브젝트를 하위타입의 오브젝트인 APlayerController에 저장할 수 없다
 	// 따라서 Cast를 해주어야한다
 	// 플레이어가 사용하고 있는 캐릭터를 리턴
-	PlayerControllerRef = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 }
 
 // Called to bind functionality to input
@@ -49,15 +49,23 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (PlayerControllerRef)
+	if (TankPlayerController)
 	{
 		FHitResult HitResult;
-		PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,
+		TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint,25.f, 12, FColor::Red, false, -1.0f);
 		RotateTurret(HitResult.ImpactPoint);	// 마우스가 가리키는 정확한 위치를 넘겨주어 turret을 회전시킨다 
 	}
+}
+
+// BasePawn 것을 상속 받아 사용 
+void ATank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	SetActorHiddenInGame(true);	// Destroy하는 대신 화면에서만 숨기기
+	SetActorTickEnabled(false);	// Tick 금지
 }
 
 void ATank::Move(float value)

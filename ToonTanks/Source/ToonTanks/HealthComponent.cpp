@@ -3,6 +3,10 @@
 
 #include "HealthComponent.h"
 
+#include "ToonTanksGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "ToonTanksGameMode.h"
+
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
@@ -24,6 +28,7 @@ void UHealthComponent::BeginPlay()
 
 	// Damage 감지 델리게이트 등록 
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::DamageTaken);
+	ToonTanksGameMode = Cast<AToonTanksGameMode>(UGameplayStatics::GetGameMode(this));	// 현재 게임모드 가져오기 
 }
 
 
@@ -43,6 +48,11 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
 		return;
 	}
 	Health -= Damage;
+
+	if (Health <= 0.f && ToonTanksGameMode)
+	{
+		ToonTanksGameMode->ActorDied(DamagedActor);
+	}
 
 	UE_LOG(LogTemp, Warning, TEXT("HEALTH: %f"), Health);
 }

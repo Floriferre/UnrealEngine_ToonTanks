@@ -30,6 +30,11 @@ ABasePawn::ABasePawn()
 
 }
 
+void ABasePawn::HandleDestruction()
+{
+	// TODO: Visual/Sound Effects
+}
+
 void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
 	// 방향 벡터 중에 x, y 방향만 움직이고 (Yaw) 위아래는 움직이지 않기 
