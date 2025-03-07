@@ -25,9 +25,32 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
 void AToonTanksGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	HandleGameStart();
+}
 
+// 게임이 바로 시작하지 않고 일정시간 딜레이 후 시작되게 
+void AToonTanksGameMode::HandleGameStart()
+{
 	Tank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));	// 현재 월드에서 0번쨰 인덱스 가져오기
 	// Player Controller 설정 
 	ToonTanksPlayerController = Cast<AToonTanksPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+
+	if (ToonTanksPlayerController)
+	{
+		ToonTanksPlayerController->SetPlayerEnableState(false);	// 일단 바로 게임 시작 X
+
+		FTimerHandle PlayerEnableTimerHandle;
+		FTimerDelegate PlayerEnableTimerDelegate = FTimerDelegate::CreateUObject(
+			ToonTanksPlayerController,
+			&AToonTanksPlayerController::SetPlayerEnableState,
+			true
+		);
+		GetWorldTimerManager().SetTimer(PlayerEnableTimerHandle,
+			PlayerEnableTimerDelegate,
+			StartDelay,	// delay
+			false	// loop X
+			);
+	}
+	
 }
 
