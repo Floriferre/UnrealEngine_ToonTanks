@@ -51,11 +51,13 @@ void ABasePawn::Fire()
 	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
 
 	// Projectile 생성
-	GetWorld()->SpawnActor<AProjectile>(
+	// auto : 컴파일 시간에 그 변수의 타입을 자동으로 추론함
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileClass,
 		Location,
 		Rotation
 	);
+	Projectile->SetOwner(this);	// Projectile의 Owner는 Pawn
 	
 }
 

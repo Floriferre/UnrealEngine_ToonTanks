@@ -4,6 +4,8 @@
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -37,12 +39,26 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
+// Hit이 발생했을 때
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	// 현재 이 Projectile의 주체 
+	auto MyOwner = GetOwner();
+	if (!MyOwner)	// 주체가 없으면 패스
+	{
+		return;
+	}
+	
+	// 플레이어와 데미지 타입을 가져옴 가져옴
+	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
+	auto DamageTypeClass = UDamageType::StaticClass();
 
-	UE_LOG(LogTemp, Warning, TEXT("HitComp: %s"), *HitComp->GetName());
-	UE_LOG(LogTemp, Warning, TEXT("OtherActor: %s"), *OtherActor->GetName());
-	UE_LOG(LogTemp, Warning, TEXT("OtherComp: %s"), *OtherComp->GetName());
+	// 다른 액터가 있고, 자기 자신한테 부딪한 게 아니고, 내 주체와 부딪힌 것도 아니라면 데미지 적용 
+	if (OtherActor && OtherActor != this && OtherActor != MyOwner)
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
+		Destroy();	// 맞춘 총알은 파괴해서 없애기 
+	}
 	
 }
 
